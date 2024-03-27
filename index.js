@@ -3,7 +3,7 @@ const { DateTime } = require('luxon');
 let locale = 'en-US'; // Default locale
 let holidays = []; // Default holidays list
 
-function isWorkingday(date, locale) {
+function isWorkday(date, locale) {
     const dt = DateTime.fromJSDate(date, { locale });
 
     // Check if it's a weekend
@@ -23,7 +23,7 @@ function update(newLocale, newHolidays) {
 }
 
 module.exports = {
-    isWorkingday,
+    isWorkday,
     update
 };
 
