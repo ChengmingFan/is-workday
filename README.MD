@@ -48,4 +48,13 @@ Returns `true` if the date is a weekday, `false` if it's a weekend or a holiday.
 
 Updates the locale and custom holidays list.
 
-- `locale`: A string repre
+- `locale`: A string representing the new locale.
+- `holidays`: An array of strings representing additional holidays to be added.
+
+## Example
+
+See the usage example above for a basic usage demonstration.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
