@@ -12,5 +12,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "luxon": "^3.4.4",
+    "lodash": "^4.17.21"
+  }
 }
