@@ -1,59 +1,104 @@
-# is-workday
+# Workday Checker
 
-A Node.js module to determine whether a given date is a weekday or not, with support for custom locales and holidays.
+Workday Checker is a Node.js package that allows you to check whether a given date is a workday or not, considering weekends and user-defined holidays.
 
 ## Installation
 
-You can install this module using npm:
+To install Workday Checker, you can use npm:
 
 ```bash
-npm install is-workday
+npm install workday-checker
 ```
 
 ## Usage
 
 ```javascript
-const { isWeekday, update } = require('is-workday');
+const workdayChecker = require('workday-checker');
 
-// Determine if a specific date is a weekday
-const dateToCheck = new Date('2024-03-28');
-const locale = 'en-US'; // User's locale
-const holidays = ['2024-01-01', '2024-12-25']; // Custom holidays list
+// Set locale and update holidays
+workdayChecker.update('en-US', ['2024-01-01', '2024-12-25']); // Update locale and holidays
 
-if (isWeekday(dateToCheck, locale)) {
-    console.log(`${dateToCheck.toDateString()} is a weekday.`);
-} else {
-    console.log(`${dateToCheck.toDateString()} is not a weekday or is a holiday.`);
-}
+// Check if a date is a workday
+const date = new Date('2024-04-15');
+const isWorkday = workdayChecker.isWorkday(date);
+console.log(isWorkday); // Output: true
 
-// Update locale and holidays
-const newLocale = 'en-GB'; // New locale
-const newHolidays = ['2024-05-01']; // Additional holidays
+// Get the next workday
+const nextWorkday = workdayChecker.getNextWorkday(date);
+console.log(nextWorkday); // Output: 2024-04-16
 
-update(newLocale, newHolidays);
+// Check if a date is a holiday
+const isHoliday = workdayChecker.isHoliday(date);
+console.log(isHoliday); // Output: false
+
+// Add a new holiday
+workdayChecker.addHoliday('2024-05-01'); // Add May 1st as a holiday
+
+// Remove a holiday
+workdayChecker.removeHoliday('2024-12-25'); // Remove December 25th as a holiday
+
+// Get workdays within a date range
+const startDate = new Date('2024-04-01');
+const endDate = new Date('2024-04-30');
+const workdaysInRange = workdayChecker.getWorkdaysInRange(startDate, endDate);
+console.log(workdaysInRange); // Output: Array of workdays between April 1st and April 30th
+
+// Get the name of a holiday
+const holidayName = workdayChecker.getHolidayName(date);
+console.log(holidayName); // Output: Holiday name if the date is a holiday, otherwise undefined
 ```
 
 ## API
 
-### `isWeekday(date, locale)`
+### `update(newLocale: string, newHolidays: string[]): void`
 
-Determines whether a given date is a weekday or not.
+Updates the locale and the list of holidays.
 
-- `date`: A JavaScript Date object representing the date to be checked.
-- `locale`: A string representing the locale to be used for date calculations.
+- `newLocale`: The new locale to set.
+- `newHolidays`: An array of new holidays to add.
 
-Returns `true` if the date is a weekday, `false` if it's a weekend or a holiday.
+### `isWorkday(date: Date): boolean`
 
-### `update(locale, holidays)`
+Checks if a given date is a workday.
 
-Updates the locale and custom holidays list.
+- `date`: The date to check.
 
-- `locale`: A string representing the new locale.
-- `holidays`: An array of strings representing additional holidays to be added.
+### `getNextWorkday(date: Date): Date`
 
-## Example
+Returns the next workday after the given date.
 
-See the usage example above for a basic usage demonstration.
+- `date`: The date for which to find the next workday.
+
+### `isHoliday(date: Date): boolean`
+
+Checks if a given date is a holiday.
+
+- `date`: The date to check.
+
+### `addHoliday(date: string): void`
+
+Adds a new holiday to the list of holidays.
+
+- `date`: The date of the holiday to add (in format 'YYYY-MM-DD').
+
+### `removeHoliday(date: string): void`
+
+Removes a holiday from the list of holidays.
+
+- `date`: The date of the holiday to remove (in format 'YYYY-MM-DD').
+
+### `getWorkdaysInRange(startDate: Date, endDate: Date): Date[]`
+
+Returns an array of workdays within the specified date range.
+
+- `startDate`: The start date of the range.
+- `endDate`: The end date of the range.
+
+### `getHolidayName(date: Date): string | undefined`
+
+Returns the name of the holiday for the given date.
+
+- `date`: The date for which to get the holiday name.
 
 ## License
 
